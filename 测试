@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>文学风格测试｜20题文学谱系倾向</title>
+  <style>
+    :root{
+      --bg:#0b0f14; --card:#101826; --muted:#9fb0c7; --text:#eaf2ff;
+      --line:#203047; --accent:#7aa2ff; --accent2:#7dffcf; --danger:#ff6b6b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,Segoe UI,Roboto,Helvetica,Arial;
+      background: radial-gradient(1200px 700px at 30% 0%, rgba(122,162,255,.18), transparent 60%),
+                  radial-gradient(1000px 700px at 70% 0%, rgba(125,255,207,.12), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:860px;margin:0 auto;padding:20px 16px 40px}
+    header{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .brand h1{margin:0;font-size:20px;letter-spacing:.5px}
+    .brand p{margin:6px 0 0;color:var(--muted);font-size:13px}
+    .pill{
+      padding:8px 10px;border:1px solid var(--line);border-radius:999px;
+      color:var(--muted);font-size:12px;display:flex;gap:8px;align-items:center;
+      background: rgba(16,24,38,.55); backdrop-filter: blur(10px);
+    }
+    .card{
+      margin-top:14px;background: rgba(16,24,38,.72);
+      border:1px solid rgba(32,48,71,.9); border-radius:14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .progress{
+      height:10px;background: rgba(32,48,71,.6);
+    }
+    .bar{
+      height:10px;width:0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .25s ease;
+    }
+    .content{padding:16px}
+    .qtitle{font-size:16px;margin:0 0 10px}
+    .qmeta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;margin-bottom:12px}
+    .opts{display:grid;gap:10px}
+    .opt{
+      border:1px solid rgba(32,48,71,.9);
+      background: rgba(11,15,20,.55);
+      padding:12px 12px;border-radius:12px;
+      cursor:pointer; user-select:none;
+      transition: transform .05s ease, border-color .15s ease, background .15s ease;
+    }
+    .opt:hover{border-color: rgba(122,162,255,.65)}
+    .opt:active{transform: scale(.99)}
+    .opt.selected{
+      border-color: rgba(125,255,207,.9);
+      background: rgba(125,255,207,.08);
+    }
+    .nav{
+      display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap
+    }
+    button{
+      border:1px solid rgba(32,48,71,.9);
+      background: rgba(11,15,20,.6);
+      color:var(--text);
+      padding:10px 12px;border-radius:12px;
+      cursor:pointer;
+      transition: border-color .15s ease, transform .05s ease;
+      font-weight:600;
+    }
+    button:hover{border-color: rgba(122,162,255,.75)}
+    button:active{transform: scale(.99)}
+    button.primary{
+      background: linear-gradient(90deg, rgba(122,162,255,.95), rgba(125,255,207,.85));
+      border-color: transparent; color:#051018;
+    }
+    button.ghost{color:var(--muted)}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    .grid2{display:grid;grid-template-columns:1fr;gap:12px}
+    @media (min-width: 760px){ .grid2{grid-template-columns:1.1fr .9fr} }
+    .section h2{margin:0 0 10px;font-size:14px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
+    .badgeRow{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{
+      border:1px solid rgba(32,48,71,.9);
+      background: rgba(11,15,20,.45);
+      padding:8px 10px;border-radius:999px;
+      font-size:12px;color:var(--text)
+    }
+    .mini{font-size:12px;color:var(--muted)}
+    .hr{height:1px;background: rgba(32,48,71,.8);margin:14px 0}
+    .bars{display:grid;gap:10px}
+    .row{display:grid;grid-template-columns: 1fr 56px;gap:10px;align-items:center}
+    .track{height:10px;background: rgba(32,48,71,.55);border-radius:999px;overflow:hidden}
+    .fill{height:10px;width:0%;background: linear-gradient(90deg, var(--accent), var(--accent2))}
+    .k{font-size:13px}
+    .v{font-size:12px;color:var(--muted);text-align:right}
+    .resultTitle{font-size:18px;margin:0 0 6px}
+    .hint{color:var(--muted);font-size:13px;margin:0}
+    .list{margin:8px 0 0;padding-left:18px;color:var(--text)}
+    .foot{margin-top:18px;color:var(--muted);font-size:12px}
+    .warn{color: #ffd6d6}
+    .toast{
+      position:fixed; left:50%; transform:translateX(-50%);
+      bottom:18px; background: rgba(16,24,38,.92);
+      border:1px solid rgba(32,48,71,.9);
+      padding:10px 12px;border-radius:12px;
+      color:var(--text); font-size:13px; display:none;
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>文学风格测试（20题）</h1>
+        <p>测你的叙事气质与“文学谱系倾向”：现代主义/现实主义/极简主义/后现代。</p>
+      </div>
+      <div class="pill">
+        <span id="stateDot">●</span>
+        <span id="stateText">未开始</span>
+      </div>
+    </header>
+
+    <div class="card" id="card">
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="content" id="content"></div>
+    </div>
+
+    <div class="foot">
+      <div class="hr"></div>
+      <div>使用方式：保存为 <b>index.html</b> → 手机浏览器打开；或上传到 GitHub Pages 直接当网址用。</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+/**
+ * 维度（谱系轴）：
+ * M = Modernist 现代主义（意识流/象征/碎片/内在真实）
+ * R = Realist 现实主义（社会/结构/因果/描写）
+ * X = Minimalist 极简主义（留白/克制/冰山）
+ * P = Postmodern 后现代（解构/元叙事/互文/游戏）
+ *
+ * 每题四个选项，每个选项给四维加权分。
+ */
+
+const AXES = [
+  { key:'M', name:'现代主义', desc:'内在经验、象征、碎片化、意识流' },
+  { key:'R', name:'现实主义', desc:'社会结构、因果链、可感细节与现实压力' },
+  { key:'X', name:'极简主义', desc:'克制、留白、冷静句法与“冰山”表达' },
+  { key:'P', name:'后现代', desc:'解构、互文、元叙事、黑色幽默与游戏性' },
+];
+
+const QUESTIONS = [
+  {
+    t:'你更信任“好叙事”的哪个核心？',
+    o:[
+      { txt:'人物的内在回声：记忆、幻觉、情绪潮汐', s:{M:3,R:0,X:1,P:0} },
+      { txt:'社会与处境：阶层、制度、家庭、工作', s:{M:0,R:3,X:0,P:1} },
+      { txt:'不说破的力量：越克制越锋利', s:{M:1,R:0,X:3,P:0} },
+      { txt:'叙事的把戏：结构反转、旁白自嘲、文本意识', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你最喜欢的“句子质地”更接近哪种？',
+    o:[
+      { txt:'意象密度高，句子像雾里闪光', s:{M:3,R:0,X:0,P:1} },
+      { txt:'清晰可视，像摄影机稳定推拉', s:{M:0,R:3,X:1,P:0} },
+      { txt:'短句、空白、像刀口', s:{M:0,R:1,X:3,P:0} },
+      { txt:'拼贴、跳切、引用、像混剪', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你写景时更在意什么？',
+    o:[
+      { txt:'景是心理：天气=情绪，物件=隐喻', s:{M:3,R:0,X:1,P:0} },
+      { txt:'景是现实证据：地理与生活细节要准确', s:{M:0,R:3,X:1,P:0} },
+      { txt:'景是留白：只点关键一两笔', s:{M:1,R:0,X:3,P:0} },
+      { txt:'景是文本装置：地图、清单、脚注式段落', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你更常用哪种推进方式？',
+    o:[
+      { txt:'联想链：一念起，万物回响', s:{M:3,R:0,X:0,P:1} },
+      { txt:'因果链：事件推动人物改变', s:{M:0,R:3,X:1,P:0} },
+      { txt:'压缩：只保留“必需”的动作与对白', s:{M:0,R:1,X:3,P:0} },
+      { txt:'结构游戏：章节标题本身在讲故事', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你对“解释”的态度更像？',
+    o:[
+      { txt:'解释会破坏暧昧，我宁愿让它飘着', s:{M:3,R:0,X:2,P:0} },
+      { txt:'解释能让世界更可理解：该交代就交代', s:{M:0,R:3,X:0,P:1} },
+      { txt:'解释越少越好：读者自己补全', s:{M:1,R:0,X:3,P:0} },
+      { txt:'解释本身也可以被嘲弄：我让叙事自我拆台', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你更偏好哪种人物？',
+    o:[
+      { txt:'自我感强、内心复杂、可能不可靠', s:{M:3,R:0,X:1,P:1} },
+      { txt:'被现实挤压的人：家庭/工作/社会冲突', s:{M:0,R:3,X:1,P:0} },
+      { txt:'寡言的人：情绪在沉默里发光', s:{M:1,R:0,X:3,P:0} },
+      { txt:'像“角色”那样自觉：知道自己在故事里', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你觉得“好对白”应该是？',
+    o:[
+      { txt:'像暗流：一句话背后有很多未说出', s:{M:2,R:0,X:3,P:0} },
+      { txt:'像现实：口癖、停顿、信息量明确', s:{M:0,R:3,X:1,P:0} },
+      { txt:'像刀：越短越痛', s:{M:0,R:1,X:3,P:0} },
+      { txt:'像玩笑：反讽、挪用、突然跳出戏外', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你常写的“情感”更靠近？',
+    o:[
+      { txt:'难以命名的情绪：潮湿、偏执、幽微', s:{M:3,R:0,X:1,P:0} },
+      { txt:'现实中的关系：权力、利益、责任、伤害', s:{M:0,R:3,X:0,P:1} },
+      { txt:'克制的情绪：不哭不闹但后劲很大', s:{M:1,R:0,X:3,P:0} },
+      { txt:'情绪也可被拆解：我让它呈现为结构/符号', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你对“时间”更感兴趣的是？',
+    o:[
+      { txt:'记忆的非线性：过去不断返场', s:{M:3,R:0,X:0,P:1} },
+      { txt:'历史/时代：人物命运被年代推动', s:{M:0,R:3,X:0,P:1} },
+      { txt:'当下瞬间：一件小事被放大到极致', s:{M:1,R:0,X:3,P:0} },
+      { txt:'时间作为文本装置：倒叙/循环/多版本', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你会更想把作品写成？',
+    o:[
+      { txt:'心理迷宫：读完像做了一场梦', s:{M:3,R:0,X:1,P:0} },
+      { txt:'社会切片：像一部时代纪录片', s:{M:0,R:3,X:1,P:0} },
+      { txt:'薄而锋利：像一根针扎进皮肤', s:{M:1,R:0,X:3,P:0} },
+      { txt:'文本游乐场：读者参与“解题”', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你怎么看“意象/象征”？',
+    o:[
+      { txt:'必要：意象是我真正的母语', s:{M:3,R:0,X:1,P:0} },
+      { txt:'适量：象征要服务现实语境', s:{M:0,R:3,X:0,P:1} },
+      { txt:'越少越好：我更信任动作与留白', s:{M:0,R:1,X:3,P:0} },
+      { txt:'可以乱用：符号本身就是玩具', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你对“世界观/设定”的态度？',
+    o:[
+      { txt:'世界观是心理延伸：真实不重要，感受重要', s:{M:3,R:0,X:0,P:1} },
+      { txt:'越真实越好：地名、行业、规则要经得起查', s:{M:0,R:3,X:1,P:0} },
+      { txt:'我只给必要信息：让读者在空白里补齐', s:{M:1,R:0,X:3,P:0} },
+      { txt:'设定可以自我揭穿：我让读者看见“搭景”', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你更愿意如何处理“真相”？',
+    o:[
+      { txt:'真相是多层的：越写越不确定', s:{M:3,R:0,X:1,P:1} },
+      { txt:'真相要落地：该是谁做的就是谁做的', s:{M:0,R:3,X:0,P:1} },
+      { txt:'真相不用说完：最后留一刀', s:{M:1,R:0,X:3,P:0} },
+      { txt:'真相可被解构：每个人版本都成立', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你更喜欢的“结构”是？',
+    o:[
+      { txt:'碎片拼成整体：像梦的拼图', s:{M:3,R:0,X:0,P:2} },
+      { txt:'起承转合明确：读者稳稳走完一条路', s:{M:0,R:3,X:1,P:0} },
+      { txt:'短章、断句、压缩：干净利落', s:{M:0,R:1,X:3,P:0} },
+      { txt:'套娃/伪档案/多媒介：结构本身在说话', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你对“作者存在感”更偏好？',
+    o:[
+      { txt:'隐身但渗透：作者像水汽在字里', s:{M:3,R:0,X:1,P:0} },
+      { txt:'客观叙述：作者像纪录者', s:{M:0,R:3,X:1,P:0} },
+      { txt:'几乎消失：让文本冷得像石头', s:{M:0,R:1,X:3,P:0} },
+      { txt:'直接登场：作者可以吐槽/和读者说话', s:{M:0,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你觉得“幽默”在文学里更像？',
+    o:[
+      { txt:'稀薄的幽默：更像梦里突然轻一下', s:{M:2,R:0,X:1,P:1} },
+      { txt:'现实讽刺：对制度/人性的一针见血', s:{M:0,R:3,X:0,P:2} },
+      { txt:'冷幽默：不笑但很狠', s:{M:0,R:1,X:3,P:1} },
+      { txt:'黑色幽默/荒诞：越崩坏越好笑', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你更容易被哪种结尾打动？',
+    o:[
+      { txt:'开放、回旋、像余音绕梁', s:{M:3,R:0,X:2,P:0} },
+      { txt:'落地、因果闭合：该付代价就付代价', s:{M:0,R:3,X:0,P:1} },
+      { txt:'干脆一刀：一行字结束一生', s:{M:1,R:0,X:3,P:0} },
+      { txt:'反转或拆解：结尾把整本书的地基掀掉', s:{M:0,R:1,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你写作时更依赖？',
+    o:[
+      { txt:'声音与节奏：我先听见句子再写', s:{M:3,R:0,X:1,P:0} },
+      { txt:'观察与资料：我先弄懂现实再写', s:{M:0,R:3,X:1,P:0} },
+      { txt:'删改：我把句子削到只剩骨头', s:{M:0,R:1,X:3,P:0} },
+      { txt:'结构与互文：我先搭一个能玩起来的框', s:{M:0,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你更愿意读哪种文本？',
+    o:[
+      { txt:'意识流/象征浓度高的作品', s:{M:3,R:0,X:0,P:1} },
+      { txt:'强现实题材：家庭/社会/历史', s:{M:0,R:3,X:0,P:1} },
+      { txt:'短篇/极简：读完像吞下一颗药', s:{M:0,R:1,X:3,P:0} },
+      { txt:'怪书：伪档案、拼贴、元小说', s:{M:0,R:0,X:0,P:3} },
+    ]
+  },
+  {
+    t:'你觉得“文学谱系”最像什么？',
+    o:[
+      { txt:'河流：很多支流汇成一条感受的河', s:{M:3,R:0,X:1,P:1} },
+      { txt:'地层：每一层都压着现实重量', s:{M:0,R:3,X:0,P:1} },
+      { txt:'刀法：删与不删决定质地', s:{M:0,R:1,X:3,P:0} },
+      { txt:'迷宫：你以为是路，其实是机关', s:{M:1,R:0,X:0,P:3} },
+    ]
+  },
+];
+
+const PROFILES = [
+  {
+    key:'M',
+    title:'象征/意识流倾向（现代主义谱系）',
+    tags:['意象密度','碎片化叙事','内在真实','情绪与记忆驱动'],
+    blurb:'你更相信“内心的真实”胜过外部事实。叙事可以不直线，但必须有回声、有气味、有潮湿的心理纹理。',
+    rec:[
+      '普鲁斯特 / 伍尔夫 / 乔伊斯（意识流与时间）',
+      '卡夫卡 / 福克纳（精神结构与叙事密度）',
+      '川端康成 / 三岛由纪夫（意象与冷热交错）'
+    ],
+    craft:[
+      '把“意象链”当作推进：一个物件贯穿全篇（雨、灯、味道、手势）。',
+      '控制信息：外部事件少，但每次出现都像敲钟。',
+      '避免抽象抒情：让情绪落到触感、动作与光影上。'
+    ]
+  },
+  {
+    key:'R',
+    title:'社会现实倾向（现实主义谱系）',
+    tags:['处境与结构','因果链清晰','细节可核查','人物被现实推动'],
+    blurb:'你在意“人如何被世界塑形”。你写的不是空中楼阁，而是现实压力下的选择、代价与关系网络。',
+    rec:[
+      '巴尔扎克 / 狄更斯（社会结构与人）',
+      '托尔斯泰 / 契诃夫（生活的重量与人物）',
+      '余华 / 张爱玲（冷静的人性与时代纹理）'
+    ],
+    craft:[
+      '用“场景”承载社会关系：饭桌、办公室、车站、医院。',
+      '因果链要能复述：读者能说清“为什么会这样”。',
+      '人物动机写在行为里：借钱、迟到、沉默、失联。'
+    ]
+  },
+  {
+    key:'X',
+    title:'克制留白倾向（极简主义谱系）',
+    tags:['冰山叙事','短句高压','留白与沉默','后劲型情绪'],
+    blurb:'你更相信“说少一点更痛”。文字是刀法：删掉解释，留下证据，让读者自己在空白里完成爆炸。',
+    rec:[
+      '海明威 / 卡佛（极简与冰山）',
+      '村上春树（表面平静下的暗流）',
+      '雷蒙德·钱德勒（冷硬的节奏与锋利感）'
+    ],
+    craft:[
+      '每一段都问：这句话非写不可吗？',
+      '对白用“潜台词”写：让冲突藏在礼貌里。',
+      '结尾不总结：给一个动作或物件就够了。'
+    ]
+  },
+  {
+    key:'P',
+    title:'解构游戏倾向（后现代谱系）',
+    tags:['互文与拼贴','元叙事','黑色幽默','结构机关'],
+    blurb:'你喜欢让文本“自己意识到自己是文本”。你写的不只是故事，还在写“讲故事这件事”本身。',
+    rec:[
+      '博尔赫斯 / 卡尔维诺（迷宫与元叙事）',
+      '品钦 / 冯内古特（荒诞与解构）',
+      '昆德拉（小说自我反思与观念）'
+    ],
+    craft:[
+      '结构先行：章节标题、清单、伪档案都能成为叙事。',
+      '互文要服务主题：引用不是炫技，是“对话”。',
+      '控制读者体验：每一次跳出戏外都要带来信息增量。'
+    ]
+  }
+];
+
+function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+const state = {
+  i: -1,
+  answers: Array(QUESTIONS.length).fill(null),
+};
+
+const el = {
+  content: document.getElementById('content'),
+  bar: document.getElementById('bar'),
+  stateText: document.getElementById('stateText'),
+  stateDot: document.getElementById('stateDot'),
+  toast: document.getElementById('toast'),
+};
+
+function toast(msg){
+  el.toast.textContent = msg;
+  el.toast.style.display = 'block';
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=> el.toast.style.display='none', 1600);
+}
+
+function setHeader(status){
+  el.stateText.textContent = status;
+  el.stateDot.style.color = status.includes('完成') ? 'var(--accent2)' : 'var(--accent)';
+}
+
+function progress(){
+  const done = state.answers.filter(v=>v!==null).length;
+  const pct = Math.round((done / QUESTIONS.length) * 100);
+  el.bar.style.width = pct + '%';
+  return { done, pct };
+}
+
+function start(){
+  state.i = 0;
+  setHeader('进行中');
+  renderQuestion();
+}
+
+function renderIntro(){
+  setHeader('未开始');
+  el.bar.style.width = '0%';
+  el.content.innerHTML = `
+    <div class="grid2">
+      <div class="section">
+        <h2>这是什么</h2>
+        <p class="hint">20道选择题，测你的叙事气质与文学谱系倾向。没有“对错”，只有偏好。</p>
+        <div class="hr"></div>
+        <h2>四条谱系轴</h2>
+        <div class="badgeRow">
+          ${AXES.map(a=>`<span class="badge"><b>${a.name}</b>：${a.desc}</span>`).join('')}
+        </div>
+        <div class="hr"></div>
+        <p class="mini warn">提示：不要选“你觉得高级的”，选“你真的会写/会爱读的”。</p>
+      </div>
+      <div class="section">
+        <h2>开始</h2>
+        <p class="mini">预计用时：2-5分钟。</p>
+        <button class="primary" id="btnStart">开始测试</button>
+        <div class="hr"></div>
+        <h2>隐私</h2>
+        <p class="mini">所有计算在本地完成，不上传任何数据。</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('btnStart').onclick = start;
+}
+
+function renderQuestion(){
+  const {done, pct} = progress();
+  const q = QUESTIONS[state.i];
+  const picked = state.answers[state.i];
+
+  el.content.innerHTML = `
+    <div class="qmeta">
+      <div>第 <b>${state.i+1}</b> / ${QUESTIONS.length} 题</div>
+      <div>已答 <b>${done}</b> 题 · 进度 <b>${pct}%</b></div>
+    </div>
+    <h3 class="qtitle">${q.t}</h3>
+    <div class="opts" id="opts">
+      ${q.o.map((opt, idx)=>`
+        <div class="opt ${picked===idx?'selected':''}" data-idx="${idx}">
+          ${opt.txt}
+        </div>
+      `).join('')}
+    </div>
+    <div class="nav">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="ghost" id="btnPrev" ${state.i===0?'disabled':''}>上一题</button>
+        <button class="ghost" id="btnReset">重置</button>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="btnNext" class="${state.i===QUESTIONS.length-1?'primary':''}" ${picked===null?'disabled':''}>
+          ${state.i===QUESTIONS.length-1 ? '查看结果' : '下一题'}
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('opts').onclick = (e)=>{
+    const node = e.target.closest('.opt');
+    if(!node) return;
+    const idx = Number(node.dataset.idx);
+    state.answers[state.i] = idx;
+    renderQuestion(); // re-render to update selected + enable next
+  };
+
+  document.getElementById('btnPrev').onclick = ()=>{
+    state.i = clamp(state.i-1, 0, QUESTIONS.length-1);
+    renderQuestion();
+  };
+
+  document.getElementById('btnReset').onclick = ()=>{
+    state.i = -1;
+    state.answers = Array(QUESTIONS.length).fill(null);
+    toast('已重置');
+    renderIntro();
+  };
+
+  document.getElementById('btnNext').onclick = ()=>{
+    if(state.answers[state.i]===null){
+      toast('先选一个选项');
+      return;
+    }
+    if(state.i === QUESTIONS.length-1){
+      renderResult();
+    } else {
+      state.i++;
+      renderQuestion();
+    }
+  };
+}
+
+function computeScores(){
+  const score = {M:0,R:0,X:0,P:0};
+  state.answers.forEach((ans, qi)=>{
+    if(ans===null) return;
+    const add = QUESTIONS[qi].o[ans].s;
+    for(const k in add) score[k] += add[k];
+  });
+  return score;
+}
+
+function topAxis(score){
+  let best = 'M', bestVal = -Infinity;
+  for(const k in score){
+    if(score[k] > bestVal){ bestVal = score[k]; best = k; }
+  }
+  return best;
+}
+
+function normalize(score){
+  const max = 60; // 20题 * 3分
+  const pct = {};
+  for(const k in score) pct[k] = Math.round((score[k]/max)*100);
+  return pct;
+}
+
+function blendTag(pct){
+  // 生成一个“混合型”标签：取前两名轴
+  const arr = Object.entries(pct).sort((a,b)=>b[1]-a[1]);
+  const a = AXES.find(x=>x.key===arr[0][0]).name;
+  const b = AXES.find(x=>x.key===arr[1][0]).name;
+  const gap = arr[0][1]-arr[1][1];
+  if(gap <= 6) return `${a}×${b}（混合型）`;
+  return `${a}主导（次要：${b}）`;
+}
+
+function renderResult(){
+  setHeader('已完成');
+  const score = computeScores();
+  const pct = normalize(score);
+  const main = topAxis(score);
+  const prof = PROFILES.find(p=>p.key===main);
+
+  // 额外风格提示（根据组合）
+  const mix = blendTag(pct);
+
+  el.content.innerHTML = `
+    <h3 class="resultTitle">你的结果：${prof.title}</h3>
+    <p class="hint">总体标签：<b>${mix}</b></p>
+
+    <div class="hr"></div>
+
+    <div class="grid2">
+      <div class="section">
+        <h2>风格特征</h2>
+        <div class="badgeRow">
+          ${prof.tags.map(t=>`<span class="badge">${t}</span>`).join('')}
+        </div>
+        <p style="margin:10px 0 0;color:var(--text)">${prof.blurb}</p>
+
+        <div class="hr"></div>
+
+        <h2>写作建议（可直接套用）</h2>
+        <ul class="list">
+          ${prof.craft.map(x=>`<li>${x}</li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>文学谱系分布</h2>
+        <div class="bars">
+          ${AXES.map(a=>`
+            <div class="row">
+              <div>
+                <div class="k"><b>${a.name}</b> <span class="mini">(${a.desc})</span></div>
+                <div class="track"><div class="fill" id="fill_${a.key}"></div></div>
+              </div>
+              <div class="v"><b>${pct[a.key]}%</b></div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="hr"></div>
+
+        <h2>可能会对你“顺耳”的作家</h2>
+        <ul class="list">
+          ${prof.rec.map(x=>`<li>${x}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="nav">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="btnBack">回到题目</button>
+        <button id="btnRestart" class="ghost">重新测试</button>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="btnCopy" class="primary">复制结果文案</button>
+      </div>
+    </div>
+
+    <p class="mini" style="margin-top:12px">
+      想更“像文学谱系图谱”一点：你可以把四轴百分比当坐标，长期跟踪自己写作阶段的变化。
+    </p>
+  `;
+
+  // animate bars
+  requestAnimationFrame(()=>{
+    AXES.forEach(a=>{
+      const f = document.getElementById('fill_'+a.key);
+      if(f) f.style.width = pct[a.key] + '%';
+    });
+  });
+
+  document.getElementById('btnBack').onclick = ()=>{
+    // 回到最后一题
+    state.i = QUESTIONS.length-1;
+    setHeader('进行中');
+    renderQuestion();
+  };
+
+  document.getElementById('btnRestart').onclick = ()=>{
+    state.i = -1;
+    state.answers = Array(QUESTIONS.length).fill(null);
+    toast('已重新开始');
+    renderIntro();
+  };
+
+  document.getElementById('btnCopy').onclick = async ()=>{
+    const text =
+`我的文学风格测试结果：${prof.title}
+总体标签：${mix}
+
+四轴分布：
+- 现代主义：${pct.M}%
+- 现实主义：${pct.R}%
+- 极简主义：${pct.X}%
+- 后现代：${pct.P}%
+
+风格特征：${prof.tags.join(' / ')}
+
+写作建议：
+- ${prof.craft.join('\n- ')}
+
+可能顺耳的作家：
+- ${prof.rec.join('\n- ')}`;
+    try{
+      await navigator.clipboard.writeText(text);
+      toast('已复制到剪贴板');
+    }catch(err){
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy');
+      ta.remove();
+      toast('已复制（兼容模式）');
+    }
+  };
+}
+
+// init
+renderIntro();
+</script>
+</body>
+</html>
